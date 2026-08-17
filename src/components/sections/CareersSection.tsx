@@ -22,7 +22,7 @@ const fadeUpVariants = {
   visible: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.6, ease: 'easeOut' },
+    transition: { duration: 0.6, ease: 'easeOut' as const },
   },
 }
 
@@ -43,7 +43,7 @@ export function CareersSection() {
         style={{
           background: `linear-gradient(to bottom, rgba(8,26,43,0.70), rgba(8,26,43,0.80))`,
         }}
-        aria-hidden="true"
+        aria-hidden={true}
       />
 
       {/* Content */}
