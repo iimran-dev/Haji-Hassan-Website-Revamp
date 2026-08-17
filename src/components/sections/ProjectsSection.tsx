@@ -1,89 +1,80 @@
 'use client'
 
-import { useState } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
-import { MapPin } from 'lucide-react'
+import { useState, useRef } from 'react'
+import { motion, AnimatePresence, useInView } from 'framer-motion'
+import { Building2, Coins } from 'lucide-react'
 import Image from 'next/image'
 import { siteData } from '@/data/site-data'
 
-const CORPORATE_RED = '#C8102E'
-const DARK_NAVY = '#081A2B'
-
-const FILTERS = ['All', 'Infrastructure', 'Roads', 'Industrial', 'Commercial'] as const
+const FILTERS = [
+  'All Projects',
+  'Infrastructure',
+  'Buildings',
+  'Industrial',
+  'Roads',
+] as const
 type Filter = (typeof FILTERS)[number]
 
-const cardVariants = {
-  hidden: { opacity: 0, y: 30 },
-  visible: (i: number) => ({
+const fadeUp = {
+  hidden: { opacity: 0, y: 24 },
+  visible: {
     opacity: 1,
     y: 0,
-    transition: { delay: i * 0.08, duration: 0.5, ease: 'easeOut' as const },
-  }),
-  exit: { opacity: 0, y: -15, transition: { duration: 0.25 } },
+    transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] as const },
+  },
 }
 
 export function ProjectsSection() {
-  const [selectedFilter, setSelectedFilter] = useState<Filter>('All')
+  const [selectedFilter, setSelectedFilter] = useState<Filter>('All Projects')
+  const ref = useRef<HTMLDivElement>(null)
+  const isInView = useInView(ref, { once: true, margin: '-80px' })
 
   const filteredProjects =
-    selectedFilter === 'All'
+    selectedFilter === 'All Projects'
       ? siteData.projects
-      : siteData.projects.filter((p) => p.industry === selectedFilter)
+      : siteData.projects.filter(
+          (p) => p.industry.toLowerCase() === selectedFilter.toLowerCase()
+        )
 
   return (
     <section
       id="projects"
-      className="w-full py-20 lg:py-32"
-      style={{ backgroundColor: '#F8F9FB' }}
+      className="w-full py-12 sm:py-20 lg:py-32 bg-[#F8F9FA] overflow-hidden"
     >
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* ── Header ── */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.3 }}
-          transition={{ duration: 0.5 }}
-          className="mb-10"
-        >
-          <span
-            className="inline-block text-xs font-semibold uppercase tracking-widest mb-3"
-            style={{ color: CORPORATE_RED }}
-          >
-            Our Projects
-          </span>
-          <h2
-            className="text-3xl md:text-4xl lg:text-5xl font-bold leading-tight"
-            style={{ fontFamily: 'var(--font-manrope), system-ui, sans-serif', color: DARK_NAVY }}
-          >
-            Building Landmarks. Delivering Excellence.
-          </h2>
-        </motion.div>
+        <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between mb-12 lg:mb-16 gap-6">
+          {/* Left Title */}
+          <div>
+            <span
+              className="mb-3 block text-xs font-bold uppercase tracking-[0.25em]"
+              style={{ color: '#C8102E' }}
+            >
+              FEATURED PROJECTS
+            </span>
+            <h2 className="font-heading text-3xl sm:text-4xl lg:text-5xl font-extrabold text-[#081A2B] tracking-tight leading-[1.1]">
+              Building Landmarks.
+              <br />
+              Delivering{' '}
+              <span style={{ color: '#C8102E' }} className="font-black">
+                Excellence.
+              </span>
+            </h2>
+          </div>
 
-        {/* ── Filter Tabs ── */}
-        <motion.div
-          initial={{ opacity: 0, y: 15 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.3 }}
-          transition={{ duration: 0.4, delay: 0.15 }}
-          className="mb-10"
-        >
-          <div className="flex gap-2 overflow-x-auto pb-2 -mb-2 scrollbar-none">
+          {/* Right Filter Tabs */}
+          <div className="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none">
             {FILTERS.map((filter) => {
               const isActive = selectedFilter === filter
               return (
                 <button
                   key={filter}
                   onClick={() => setSelectedFilter(filter)}
-                  className={
-                    'relative flex-shrink-0 rounded-full px-5 py-2 text-sm font-medium transition-all duration-200 cursor-pointer'
-                  }
-                  style={{
-                    backgroundColor: isActive ? CORPORATE_RED : 'transparent',
-                    color: isActive ? '#FFFFFF' : '#111827',
-                    border: isActive
-                      ? `1px solid ${CORPORATE_RED}`
-                      : '1px solid #D1D5DB',
-                  }}
+                  className={`rounded-full px-5 py-2.5 text-xs sm:text-sm font-semibold transition-all duration-300 cursor-pointer flex-shrink-0 ${
+                    isActive
+                      ? 'bg-[#C8102E] text-white shadow-md'
+                      : 'bg-white border border-slate-200 text-slate-700 hover:bg-slate-100'
+                  }`}
                   aria-pressed={isActive}
                 >
                   {filter}
@@ -91,100 +82,63 @@ export function ProjectsSection() {
               )
             })}
           </div>
-        </motion.div>
+        </div>
 
-        {/* ── Project Cards Grid ── */}
-        <motion.div
-          layout
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+        {/* ── 4 Project Cards Grid ── */}
+        <div
+          ref={ref}
+          className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3.5 sm:gap-6"
         >
-          <AnimatePresence mode="popLayout">
-            {filteredProjects.map((project, i) => (
-              <motion.article
-                key={project.slug}
-                custom={i}
-                variants={cardVariants}
-                initial="hidden"
-                animate="visible"
-                exit="exit"
-                layout
-                className={
-                  'group relative overflow-hidden rounded-lg bg-white transition-shadow duration-300'
-                }
-                style={{
-                  boxShadow: '0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04)',
-                }}
-                whileHover={{
-                  boxShadow:
-                    '0 10px 25px rgba(0,0,0,0.1), 0 4px 10px rgba(0,0,0,0.05)',
-                  transition: { duration: 0.3 },
-                }}
-              >
-                {/* Image */}
-                <div className="relative h-56 w-full overflow-hidden rounded-t-lg">
-                  <Image
-                    src={project.image}
-                    alt={project.name}
-                    fill
-                    sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                    className="object-cover transition-transform duration-500 group-hover:scale-105"
-                  />
-                </div>
+          {filteredProjects.map((project) => (
+            <article
+              key={project.slug}
+              className="group relative aspect-[3/3.8] sm:aspect-[3/4.2] w-full rounded-2xl overflow-hidden bg-[#0F1E33] border border-slate-100 shadow-xl hover:shadow-2xl transition-all duration-500 cursor-pointer flex flex-col justify-end p-3.5 sm:p-6"
+            >
+              {/* Unsplash Background Image */}
+              <Image
+                src={project.image}
+                alt={project.name}
+                fill
+                className="object-cover object-center transition-transform duration-700 group-hover:scale-110 brightness-95 group-hover:brightness-100"
+                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                unoptimized
+              />
 
-                {/* Body */}
-                <div className="p-5">
-                  {/* Industry Badge */}
-                  <span
-                    className={
-                      'inline-block rounded-full px-3 py-0.5 text-xs font-semibold mb-3'
-                    }
-                    style={{
-                      backgroundColor:
-                        project.industry === 'Infrastructure'
-                          ? CORPORATE_RED
-                          : '#F3F4F6',
-                      color:
-                        project.industry === 'Infrastructure'
-                          ? '#FFFFFF'
-                          : '#4B5563',
-                    }}
-                  >
-                    {project.industry}
-                  </span>
+              {/* Multi-stop Gradient Overlay */}
+              <div className="absolute inset-0 bg-gradient-to-t from-[#0B1528]/95 via-[#0B1528]/50 to-transparent z-10 transition-opacity duration-500 group-hover:opacity-90" />
 
-                  {/* Project Name */}
-                  <h3
-                    className="text-xl font-bold mb-2"
-                    style={{
-                      fontFamily: 'var(--font-manrope), system-ui, sans-serif',
-                      color: DARK_NAVY,
-                    }}
-                  >
-                    {project.name}
-                  </h3>
+              {/* Bottom Content Area */}
+              <div className="relative z-20 flex flex-col justify-end w-full pt-16">
+                {/* Title & Subtitle */}
+                <h3 className="font-heading font-bold text-white text-lg sm:text-xl leading-tight group-hover:text-red-400 transition-colors mb-0.5">
+                  {project.name}
+                </h3>
+                {project.subtitle && (
+                  <p className="text-slate-300 text-xs sm:text-sm font-normal mb-4">
+                    {project.subtitle}
+                  </p>
+                )}
 
-                  {/* Location */}
-                  <div className="flex items-center gap-1.5 text-sm text-gray-500 mb-1">
-                    <MapPin className="size-3.5 flex-shrink-0" />
-                    <span>{project.location}</span>
+                {/* Bottom Meta Badges */}
+                <div className="flex items-center justify-between gap-2 border-t border-white/15 pt-3 mt-1">
+                  <div className="flex items-center gap-1.5 text-xs text-slate-300 font-medium">
+                    <Building2 className="h-3.5 w-3.5 text-slate-400 flex-shrink-0" />
+                    <span>{project.industry}</span>
                   </div>
 
-                  {/* Year */}
-                  <span className="text-sm text-gray-400">{project.year}</span>
+                  {project.value && (
+                    <div className="flex items-center gap-1.5 text-xs text-slate-300 font-medium">
+                      <Coins className="h-3.5 w-3.5 text-slate-400 flex-shrink-0" />
+                      <span>{project.value}</span>
+                    </div>
+                  )}
                 </div>
-
-                {/* Hover accent border-bottom */}
-                <span
-                  className={
-                    'absolute bottom-0 left-0 right-0 h-[3px] transition-transform duration-300 origin-left scale-x-0 group-hover:scale-x-100'
-                  }
-                  style={{ backgroundColor: CORPORATE_RED }}
-                />
-              </motion.article>
-            ))}
-          </AnimatePresence>
-        </motion.div>
+              </div>
+            </article>
+          ))}
+        </div>
       </div>
     </section>
   )
 }
+

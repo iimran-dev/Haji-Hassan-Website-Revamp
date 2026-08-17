@@ -3,37 +3,15 @@
 import { useRef } from 'react'
 import Image from 'next/image'
 import { motion, useInView } from 'framer-motion'
-import { Calendar, ArrowRight } from 'lucide-react'
+import { ArrowRight } from 'lucide-react'
 import { siteData } from '@/data/site-data'
 
-const CORPORATE_RED = '#C8102E'
-const DARK_NAVY = '#081A2B'
-
-const headerVariants = {
+const fadeUp = {
   hidden: { opacity: 0, y: 24 },
   visible: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.5, ease: 'easeOut' as const },
-  },
-}
-
-const cardContainerVariants = {
-  hidden: {},
-  visible: {
-    transition: {
-      staggerChildren: 0.15,
-      delayChildren: 0.2,
-    },
-  },
-}
-
-const cardVariants = {
-  hidden: { opacity: 0, y: 30 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.55, ease: 'easeOut' as const },
+    transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] as const },
   },
 }
 
@@ -54,122 +32,126 @@ export function NewsSection() {
     <section
       id="media"
       ref={sectionRef}
-      className="bg-white py-20 lg:py-32"
+      className="w-full bg-[#F8F9FA] py-12 sm:py-20 lg:py-32 overflow-hidden"
     >
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        {/* ── Header ── */}
         <motion.div
-          className="mb-12 flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between lg:mb-16"
-          variants={headerVariants}
+          variants={fadeUp}
           initial="hidden"
           animate={isInView ? 'visible' : 'hidden'}
+          className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-stretch"
         >
-          <div>
-            <span
-              className="mb-2 block text-sm font-semibold uppercase tracking-widest"
-              style={{ color: CORPORATE_RED }}
-            >
-              LATEST NEWS
-            </span>
-            <h2
-              className="font-heading text-3xl font-bold md:text-4xl"
-              style={{ color: DARK_NAVY }}
-            >
-              News &amp; Insights
-            </h2>
+          {/* ── Left Column: Careers Banner Card (6 Cols) ── */}
+          <div className="relative lg:col-span-6 rounded-3xl overflow-hidden min-h-[340px] sm:min-h-[420px] lg:min-h-[480px] flex flex-col justify-end p-6 sm:p-10 lg:p-12 shadow-2xl group cursor-pointer border border-slate-200/50">
+            {/* Unsplash Engineers Background Image */}
+            <Image
+              src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=1200&q=85"
+              alt="Build Your Future With Haji Hassan Group"
+              fill
+              sizes="(max-width: 1024px) 100vw, 50vw"
+              className="object-cover object-center transition-transform duration-700 group-hover:scale-105 brightness-90"
+              unoptimized
+            />
+
+            {/* Dark Multi-stop Gradient Overlay */}
+            <div className="absolute inset-0 bg-gradient-to-t from-[#081A2B]/95 via-[#081A2B]/60 to-transparent z-10 transition-opacity duration-500 group-hover:opacity-95" />
+
+            {/* Content Area */}
+            <div className="relative z-20 flex flex-col justify-end w-full">
+              <span
+                className="mb-3 block text-xs font-bold uppercase tracking-[0.25em]"
+                style={{ color: '#C8102E' }}
+              >
+                CAREERS
+              </span>
+
+              <h2 className="font-heading font-extrabold text-white text-3xl sm:text-4xl leading-tight tracking-tight mb-4">
+                Build Your Future
+                <br />
+                With Us
+              </h2>
+
+              <p className="text-slate-300 text-sm sm:text-base leading-relaxed mb-8 max-w-md font-normal">
+                Join a team of passionate professionals and be part of a legacy that continues to build the future.
+              </p>
+
+              <div>
+                <a
+                  href="#careers"
+                  className="inline-flex items-center gap-2.5 rounded-full border border-white/40 bg-white/10 backdrop-blur-md px-6 py-3 text-sm font-semibold text-white transition-all duration-300 hover:bg-white hover:text-[#081A2B] group-hover:border-white shadow-lg w-fit"
+                >
+                  <span>Explore Careers</span>
+                  <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
+                </a>
+              </div>
+            </div>
           </div>
 
-          <a
-            href="#"
-            className="mt-2 text-sm font-semibold hover:underline sm:mt-0"
-            style={{ color: CORPORATE_RED }}
-            onClick={(e) => e.preventDefault()}
-          >
-            View All
-          </a>
-        </motion.div>
+          {/* ── Right Column: Latest News & Announcements (6 Cols) ── */}
+          <div className="lg:col-span-6 flex flex-col justify-between py-2">
+            {/* Header */}
+            <div>
+              <span
+                className="mb-2 block text-xs font-bold uppercase tracking-[0.25em]"
+                style={{ color: '#C8102E' }}
+              >
+                LATEST NEWS
+              </span>
 
-        {/* ── News Cards Grid ── */}
-        <motion.div
-          className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3"
-          variants={cardContainerVariants}
-          initial="hidden"
-          animate={isInView ? 'visible' : 'hidden'}
-        >
-          {siteData.news.map((item) => (
-            <NewsCard key={item.title} {...item} />
-          ))}
+              <h2 className="font-heading font-extrabold text-[#081A2B] text-3xl sm:text-4xl leading-tight tracking-tight mb-3">
+                Latest Updates
+                <br />
+                &amp; Announcements
+              </h2>
+
+              <a
+                href="#media"
+                className="inline-flex items-center gap-1.5 text-sm font-bold transition-colors duration-200 mb-8 group cursor-pointer"
+                style={{ color: '#C8102E' }}
+              >
+                <span className="hover:underline">View All News</span>
+                <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
+              </a>
+            </div>
+
+            {/* 3 Compact Vertical News Rows */}
+            <div className="space-y-4 sm:space-y-5">
+              {siteData.news.map((item) => (
+                <article
+                  key={item.title}
+                  className="group flex items-center gap-4 sm:gap-5 p-3 sm:p-4 rounded-2xl border border-transparent hover:border-slate-200/80 hover:bg-white hover:shadow-xl transition-all duration-300 cursor-pointer"
+                >
+                  {/* Thumbnail Image */}
+                  <div className="relative h-20 w-24 sm:h-24 sm:w-28 rounded-xl overflow-hidden flex-shrink-0 shadow-md bg-slate-100">
+                    <Image
+                      src={item.image}
+                      alt={item.title}
+                      fill
+                      className="object-cover transition-transform duration-500 group-hover:scale-105"
+                      sizes="(max-width: 640px) 96px, 112px"
+                      unoptimized
+                    />
+                  </div>
+
+                  {/* Content */}
+                  <div className="flex-1 min-w-0">
+                    <h3 className="font-heading font-bold text-[#081A2B] text-sm sm:text-base leading-snug group-hover:text-red-600 transition-colors line-clamp-2 mb-1.5">
+                      {item.title}
+                    </h3>
+                    <time
+                      dateTime={item.date}
+                      className="text-xs text-slate-400 font-medium block"
+                    >
+                      {formatDate(item.date)}
+                    </time>
+                  </div>
+                </article>
+              ))}
+            </div>
+          </div>
         </motion.div>
       </div>
     </section>
   )
 }
 
-function NewsCard({
-  title,
-  category,
-  date,
-  image,
-}: {
-  title: string
-  category: string
-  date: string
-  excerpt: string
-  image: string
-}) {
-  return (
-    <motion.article
-      variants={cardVariants}
-      className="group overflow-hidden rounded-lg border border-gray-100 bg-white shadow-sm transition-shadow duration-300 hover:shadow-lg"
-    >
-      {/* Image */}
-      <div className="relative h-48 overflow-hidden rounded-t-lg">
-        <Image
-          src={image}
-          alt={title}
-          fill
-          className="object-cover transition-transform duration-500 group-hover:scale-105"
-          sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
-        />
-      </div>
-
-      {/* Card Body */}
-      <div className="p-6">
-        {/* Category Badge */}
-        <span
-          className="inline-block rounded-full bg-[#F8F9FB] px-3 py-1 text-xs font-medium uppercase tracking-wide text-gray-600"
-        >
-          {category}
-        </span>
-
-        {/* Headline */}
-        <h3
-          className="mt-3 mb-3 line-clamp-2 text-lg font-bold leading-snug transition-colors duration-200 group-hover:text-corporate-red"
-          style={{
-            color: DARK_NAVY,
-            fontFamily: 'var(--font-manrope), system-ui, sans-serif',
-          }}
-        >
-          {title}
-        </h3>
-
-        {/* Date */}
-        <div className="mb-4 flex items-center gap-1.5 text-sm text-gray-400">
-          <Calendar className="size-3.5" strokeWidth={2} />
-          <time dateTime={date}>{formatDate(date)}</time>
-        </div>
-
-        {/* Read More */}
-        <a
-          href="#"
-          className="inline-flex items-center gap-1 text-sm font-semibold transition-all duration-200"
-          style={{ color: CORPORATE_RED }}
-          onClick={(e) => e.preventDefault()}
-        >
-          Read More
-          <ArrowRight className="size-3.5 transition-transform duration-200 group-hover:translate-x-1" />
-        </a>
-      </div>
-    </motion.article>
-  )
-}

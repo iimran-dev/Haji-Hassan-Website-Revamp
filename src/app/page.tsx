@@ -7,7 +7,6 @@ import { GroupStructureSection } from "@/components/sections/GroupStructureSecti
 import { ProjectsSection } from "@/components/sections/ProjectsSection";
 import { MegaProjectSection } from "@/components/sections/MegaProjectSection";
 import { WhyUsSection } from "@/components/sections/WhyUsSection";
-import { ESGSection } from "@/components/sections/ESGSection";
 import { CareersSection } from "@/components/sections/CareersSection";
 import { NewsSection } from "@/components/sections/NewsSection";
 import { AwardsSection } from "@/components/sections/AwardsSection";
@@ -27,10 +26,8 @@ export default function Home() {
         <ProjectsSection />
         <MegaProjectSection />
         <WhyUsSection />
-        <ESGSection />
-        <CareersSection />
         <NewsSection />
-        <AwardsSection />
+        {/*<AwardsSection />*/}
         <ContactSection />
       </main>
       <Footer />

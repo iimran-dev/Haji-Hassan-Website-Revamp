@@ -78,8 +78,8 @@ function NodeCard({
       transition={{ duration: 0.45, delay, ease: 'easeOut' }}
       className={
         isParent
-          ? 'inline-flex items-center justify-center rounded-lg px-8 py-4 text-white'
-          : 'inline-flex items-center justify-center rounded-lg border border-gray-200 bg-white px-5 py-3 text-sm font-semibold text-gray-700 transition-all duration-200 hover:scale-105 hover:border-gray-400 hover:shadow-md'
+          ? 'flex w-full sm:w-auto items-center justify-center rounded-xl px-8 py-4 text-white shadow-lg'
+          : 'flex w-full sm:w-auto items-center justify-center rounded-xl border border-gray-200 bg-white px-5 py-3.5 text-sm font-semibold text-gray-700 transition-all duration-200 hover:scale-[1.02] sm:hover:scale-105 hover:border-red-500/40 hover:shadow-md'
       }
       style={
         isParent
@@ -107,7 +107,7 @@ export function GroupStructureSection() {
   const isInView = useInView(ref, { once: true, margin: '-60px' })
 
   return (
-    <section id="structure" className="w-full bg-white py-20 lg:py-28">
+    <section id="structure" className="w-full bg-white py-12 sm:py-20 lg:py-28">
       <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
         {/* ── Header ── */}
         <div className="mb-16 text-center lg:mb-20">

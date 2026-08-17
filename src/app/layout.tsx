@@ -35,7 +35,9 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: "Haji Hassan Group" }],
   icons: {
-    icon: "/logo.svg",
+    icon: [
+      { url: "/icon.svg", type: "image/svg+xml" },
+    ],
   },
   openGraph: {
     title: "Haji Hassan Group — Building Bahrain, Building The Future",

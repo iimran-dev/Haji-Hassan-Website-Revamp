@@ -6,9 +6,14 @@ import Image from 'next/image'
 import { ArrowRight } from 'lucide-react'
 import { siteData } from '@/data/site-data'
 
-const CORPORATE_RED = '#C8102E'
-const DARK_NAVY = '#081A2B'
-const CARD_BG = '#0F2A42'
+const fadeUp = {
+  hidden: { opacity: 0, y: 24 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] as const },
+  },
+}
 
 export function CompaniesSection() {
   const ref = useRef<HTMLDivElement>(null)
@@ -17,95 +22,93 @@ export function CompaniesSection() {
   return (
     <section
       id="companies"
-      className="w-full py-20 lg:py-32"
-      style={{ backgroundColor: DARK_NAVY }}
+      className="w-full py-12 sm:py-20 lg:py-32 bg-[#0B1528] overflow-hidden"
     >
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* ── Header ── */}
-        <div className="mb-14 text-center lg:mb-20">
-          <motion.span
-            initial={{ opacity: 0, y: 12 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.5 }}
-            className="mb-4 inline-block text-sm font-semibold uppercase tracking-widest"
-            style={{ color: CORPORATE_RED }}
-          >
-            Our Businesses
-          </motion.span>
-          <motion.h2
-            initial={{ opacity: 0, y: 16 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.5, delay: 0.1 }}
-            className="font-heading mx-auto max-w-3xl text-3xl font-bold text-white md:text-4xl lg:text-5xl"
-          >
-            Powering Progress Across Industries
-          </motion.h2>
+        <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between mb-12 lg:mb-16 gap-6">
+          {/* Left Title */}
+          <div>
+            <span
+              className="mb-3 block text-xs font-bold uppercase tracking-[0.25em]"
+              style={{ color: '#C8102E' }}
+            >
+              OUR BUSINESSES
+            </span>
+            <h2 className="font-heading text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white tracking-tight leading-[1.1]">
+              A Strong Group of
+              <br />
+              Diverse{' '}
+              <span style={{ color: '#C8102E' }} className="font-black">
+                Companies
+              </span>
+            </h2>
+          </div>
+
+          {/* Right Description & Action Link */}
+          <div className="max-w-md lg:text-left">
+            <p className="text-slate-300 text-sm sm:text-base font-normal leading-relaxed mb-4">
+              Our group operates through 16+ companies across key sectors,
+              delivering excellence and creating value for Bahrain and beyond.
+            </p>
+            <a
+              href="#companies"
+              className="group inline-flex items-center gap-2 text-sm font-semibold text-white hover:text-red-400 transition-colors"
+            >
+              <span>View All Companies</span>
+              <ArrowRight className="h-4 w-4 text-[#C8102E] transition-transform group-hover:translate-x-1" />
+            </a>
+          </div>
         </div>
 
-        {/* ── Cards Grid ── */}
-        <div
+        {/* ── 6 Vertical Image Cards Grid ── */}
+        <motion.div
           ref={ref}
-          className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3"
+          variants={{
+            hidden: {},
+            visible: { transition: { staggerChildren: 0.1 } },
+          }}
+          initial="hidden"
+          animate={isInView ? 'visible' : 'hidden'}
+          className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3.5 sm:gap-5"
         >
-          {siteData.companies.map((company, idx) => (
+          {siteData.companies.map((company) => (
             <motion.article
               key={company.slug}
-              initial={{ opacity: 0, y: 30 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.5, delay: idx * 0.1 }}
-              className="group relative overflow-hidden rounded-xl transition-all duration-300 hover:shadow-2xl hover:shadow-black/30"
-              style={{ backgroundColor: CARD_BG }}
+              variants={fadeUp}
+              className="group relative aspect-[3/3.8] sm:aspect-[3/4.2] w-full rounded-2xl overflow-hidden bg-[#0F1E33] border border-white/10 shadow-2xl hover:border-red-500/50 transition-all duration-500 cursor-pointer flex flex-col justify-end p-3.5 sm:p-5"
             >
-              {/* Red accent line on hover */}
-              <span
-                className="absolute inset-x-0 top-0 z-10 h-[3px] scale-x-0 transition-transform duration-300 group-hover:scale-x-100"
-                style={{ backgroundColor: CORPORATE_RED }}
+              {/* Unsplash Background Image */}
+              <Image
+                src={company.image}
+                alt={company.name}
+                fill
+                className="object-cover object-center transition-transform duration-700 group-hover:scale-110 brightness-90 group-hover:brightness-100"
+                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 33vw, 16vw"
+                unoptimized
               />
 
-              {/* Image */}
-              <div className="relative h-48 w-full overflow-hidden">
-                <Image
-                  src={company.image}
-                  alt={company.name}
-                  fill
-                  className="object-cover transition-transform duration-500 group-hover:scale-105 brightness-90 group-hover:brightness-100"
-                  sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                />
-              </div>
+              {/* Multi-stop Gradient Overlay */}
+              <div className="absolute inset-0 bg-gradient-to-t from-[#0B1528] via-[#0B1528]/60 to-transparent z-10 transition-opacity duration-500 group-hover:opacity-90" />
 
-              {/* Body */}
-              <div className="p-5">
-                <span
-                  className="mb-3 inline-block rounded-full px-3 py-1 text-xs font-semibold"
-                  style={{
-                    backgroundColor: `${CORPORATE_RED}18`,
-                    color: CORPORATE_RED,
-                  }}
-                >
-                  {company.industry}
-                </span>
+              {/* Bottom Content Area - Fixed Equalized Alignment */}
+              <div className="relative z-20 flex flex-col justify-end w-full pt-16">
+                <div className="flex items-end justify-between gap-2.5 w-full min-h-[3.5rem]">
+                  <h3 className="font-heading font-bold text-white text-base leading-snug group-hover:text-red-400 transition-colors flex-1">
+                    {company.name}
+                  </h3>
 
-                <h3 className="font-heading mb-2 text-xl font-bold text-white">
-                  {company.name}
-                </h3>
-
-                <p className="mb-4 line-clamp-2 text-sm text-gray-400">
-                  {company.description}
-                </p>
-
-                <a
-                  href={`#companies`}
-                  className="inline-flex items-center gap-1.5 text-sm font-semibold transition-transform duration-200 hover:translate-x-1"
-                  style={{ color: CORPORATE_RED }}
-                  onClick={(e) => e.preventDefault()}
-                >
-                  Learn More <ArrowRight className="h-4 w-4" />
-                </a>
+                  {/* Red Arrow Circle Icon */}
+                  <div className="flex h-8 w-8 items-center justify-center rounded-full border border-red-500/40 bg-red-500/10 text-red-500 flex-shrink-0 group-hover:bg-[#C8102E] group-hover:border-[#C8102E] group-hover:text-white transition-all duration-300 shadow-md">
+                    <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-0.5" />
+                  </div>
+                </div>
               </div>
             </motion.article>
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   )
 }
+

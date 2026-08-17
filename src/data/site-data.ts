@@ -31,9 +31,11 @@ export interface SiteData {
   }>
   projects: Array<{
     name: string
+    subtitle?: string
     slug: string
     location: string
     industry: string
+    value?: string
     image: string
     year: string
   }>
@@ -83,149 +85,192 @@ export interface SiteData {
 export const siteData: SiteData = {
   hero: {
     eyebrow: "SINCE 1952",
-    headline: "Building Bahrain.\nBuilding The Future.",
+    headline: "Building Bahrain.\nBuilding the Future.",
     supporting:
-      "Supporting national growth through engineering, construction and diversified industries.",
-    primaryCta: "Explore Group",
-    secondaryCta: "Watch Corporate Film",
+      "A diversified business group with a legacy of excellence and a vision for generations to come.",
+    primaryCta: "Explore Our Group",
+    secondaryCta: "Watch Corporate Video",
   },
   stats: [
     { label: "Years of Legacy", value: "70", suffix: "+" },
     { label: "Group Companies", value: "16", suffix: "" },
     { label: "Employees", value: "1000", suffix: "+" },
     { label: "Projects Delivered", value: "500", suffix: "+" },
-    { label: "Industries", value: "5", suffix: "" },
+    { label: "BHD Project Value", value: "500", suffix: "M+" },
+    { label: "Industries Served", value: "5", suffix: "" },
   ],
   founder: {
     headline: "A Legacy Built on Trust and Excellence",
     description:
-      "Since its founding in 1952, Haji Hassan Group has grown from a modest trading enterprise into one of Bahrain's most diversified business conglomerates. Rooted in the Kingdom's rich commercial heritage, the group has been instrumental in shaping Bahrain's modern infrastructure landscape — from roads and bridges to ready-mix concrete and industrial manufacturing. Across seven decades, the group has remained guided by the founding principles of integrity, quality, and an unwavering commitment to national development.",
-    signature: "Haji Hassan Group",
+      "Established in 1952, Haji Hassan Group has grown from a single vision into one of Bahrain's most respected and diversified business groups. Our commitment to quality, innovation, and integrity has shaped the nation's progress and infrastructure.",
+    signature: "Haji Hassan Al-Ali",
   },
   timeline: [
     {
       year: "1952",
-      title: "Foundation",
-      description:
-        "Haji Hassan Group was established in the Kingdom of Bahrain, beginning as a trading enterprise during the nation's early development era.",
+      title: "1952",
+      description: "The beginning of a remarkable journey",
     },
     {
-      year: "1970",
-      title: "Expansion into Construction",
-      description:
-        "The group expanded into construction and civil engineering, contributing to Bahrain's rapid infrastructure development.",
+      year: "1970s",
+      title: "1970s",
+      description: "Expansion into contracting and infrastructure",
     },
     {
-      year: "1990",
-      title: "Diversification",
-      description:
-        "Significant diversification into manufacturing, ready-mix concrete, and industrial services, establishing multiple group companies.",
+      year: "1990s",
+      title: "1990s",
+      description: "Diversification across multiple industries",
     },
     {
-      year: "2020",
-      title: "Modern Era",
-      description:
-        "Continued growth with large-scale infrastructure projects and further expansion of the group's diversified business portfolio.",
+      year: "Today",
+      title: "Today",
+      description: "Continuing the legacy, shaping the future",
     },
   ],
   companies: [
     {
-      name: "Haji Hassan Construction",
+      name: "Construction & Engineering",
       slug: "construction",
       description:
         "Major civil engineering and building construction capabilities for large-scale infrastructure and commercial projects.",
       industry: "Construction",
-      image: "/images/industrial.jpg",
+      image:
+        "https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=1000&q=80",
     },
     {
-      name: "Haji Hassan Infrastructure",
+      name: "Infrastructure & Civil Works",
       slug: "infrastructure",
       description:
         "Roads, bridges, utilities, and public infrastructure development serving Bahrain's national growth.",
       industry: "Infrastructure",
-      image: "/images/projects-bg.jpg",
+      image:
+        "https://images.unsplash.com/photo-1545558014-8692077e9b5c?auto=format&fit=crop&w=1000&q=80",
     },
     {
-      name: "Haji Hassan Ready Mix",
+      name: "Ready Mix Concrete",
       slug: "ready-mix",
       description:
         "Large-scale ready-mix concrete production serving construction projects across the Kingdom.",
       industry: "Ready Mix",
-      image: "/images/industrial.jpg",
+      image:
+        "https://images.unsplash.com/photo-1581094794329-c8112a89af12?auto=format&fit=crop&w=1000&q=80",
     },
     {
-      name: "Haji Hassan Trading",
+      name: "Trading & Industries",
       slug: "trading",
       description:
         "Import, export, and distribution of construction materials, equipment, and industrial supplies.",
       industry: "Trading",
-      image: "/images/founder-section.jpg",
+      image:
+        "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=1000&q=80",
     },
     {
-      name: "Haji Hassan Manufacturing",
+      name: "Manufacturing & Steel",
       slug: "manufacturing",
       description:
-        "Industrial manufacturing of construction materials and pre-cast products for the building sector.",
+        "Industrial manufacturing of construction materials, structural steel, and pre-cast products.",
       industry: "Manufacturing",
-      image: "/images/industrial.jpg",
+      image:
+        "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=1000&q=80",
     },
     {
-      name: "Haji Hassan Services",
+      name: "Support & Services",
       slug: "services",
       description:
         "Comprehensive services including facility management, equipment rental, and operational support.",
       industry: "Services",
-      image: "/images/careers-bg.jpg",
+      image:
+        "https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=1000&q=80",
     },
   ],
   projects: [
     {
-      name: "Bahrain International Airport Expansion",
+      name: "Bahrain International Airport",
+      subtitle: "Expansion Project",
       slug: "airport-expansion",
       location: "Muharraq, Bahrain",
       industry: "Infrastructure",
-      image: "/images/mega-project.jpg",
+      value: "BHD 120M+",
+      image:
+        "https://images.unsplash.com/photo-1542296332-2e4473faf563?auto=format&fit=crop&w=1000&q=80",
       year: "2020",
     },
     {
-      name: "King Fahad Causeway Maintenance",
+      name: "Shaikh Isa bin Salman",
+      subtitle: "Causeway & Highway",
       slug: "causeway-maintenance",
-      location: "Bahrain-Saudi Arabia",
-      industry: "Infrastructure",
-      image: "/images/projects-bg.jpg",
+      location: "Manama, Bahrain",
+      industry: "Roads",
+      value: "BHD 80M+",
+      image:
+        "https://images.unsplash.com/photo-1545558014-8692077e9b5c?auto=format&fit=crop&w=1000&q=80",
       year: "2019",
     },
     {
-      name: "Northern Town Infrastructure",
-      slug: "northern-town",
-      location: "Northern Bahrain",
-      industry: "Infrastructure",
-      image: "/images/hero-bg.png",
+      name: "Bahrain National Stadium",
+      subtitle: "Sports Arena Complex",
+      slug: "national-stadium",
+      location: "Riffa, Bahrain",
+      industry: "Buildings",
+      value: "BHD 80M+",
+      image:
+        "https://images.unsplash.com/photo-1577223625816-7546f13df25d?auto=format&fit=crop&w=1000&q=80",
       year: "2021",
     },
     {
-      name: "Bahrain Financial Harbour",
-      slug: "financial-harbour",
+      name: "Government & Commercial",
+      subtitle: "Financial Towers",
+      slug: "commercial-buildings",
       location: "Manama, Bahrain",
-      industry: "Commercial",
-      image: "/images/mega-project.jpg",
+      industry: "Buildings",
+      value: "BHD 90M+",
+      image:
+        "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1000&q=80",
       year: "2022",
     },
     {
-      name: "Budaiya Highway Upgrade",
-      slug: "budaiya-highway",
-      location: "Budaiya, Bahrain",
-      industry: "Roads",
-      image: "/images/projects-bg.jpg",
+      name: "Sitra Heavy Industrial Zone",
+      subtitle: "Logistics Hub",
+      slug: "sitra-industrial",
+      location: "Sitra, Bahrain",
+      industry: "Industrial",
+      value: "BHD 65M+",
+      image:
+        "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=1000&q=80",
+      year: "2021",
+    },
+    {
+      name: "King Fahad Causeway Link",
+      subtitle: "Bridge Infrastructure",
+      slug: "king-fahad-causeway",
+      location: "Bahrain-Saudi border",
+      industry: "Infrastructure",
+      value: "BHD 110M+",
+      image:
+        "https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=1000&q=80",
       year: "2023",
     },
     {
-      name: "Industrial Area Development",
-      slug: "industrial-area",
-      location: "Sitra, Bahrain",
+      name: "Budaiya Highway Network",
+      subtitle: "Arterial Road Upgrade",
+      slug: "budaiya-highway-network",
+      location: "Budaiya, Bahrain",
+      industry: "Roads",
+      value: "BHD 45M+",
+      image:
+        "https://images.unsplash.com/photo-1519817650390-64a93db51149?auto=format&fit=crop&w=1000&q=80",
+      year: "2022",
+    },
+    {
+      name: "Al Hidd Manufacturing Hub",
+      subtitle: "Steel & Fabrication Plant",
+      slug: "hidd-manufacturing",
+      location: "Al Hidd, Bahrain",
       industry: "Industrial",
-      image: "/images/industrial.jpg",
-      year: "2021",
+      value: "BHD 75M+",
+      image:
+        "https://images.unsplash.com/photo-1565008447742-97f6f38c985c?auto=format&fit=crop&w=1000&q=80",
+      year: "2020",
     },
   ],
   whyUs: [
@@ -276,28 +321,31 @@ export const siteData: SiteData = {
   },
   news: [
     {
-      title: "Haji Hassan Group Completes Major Highway Project",
-      category: "Projects",
-      date: "2024-03-15",
-      excerpt:
-        "The group has successfully delivered a key infrastructure project as part of Bahrain's national road development program.",
-      image: "/images/projects-bg.jpg",
-    },
-    {
-      title: "New Ready Mix Concrete Facility Opens",
+      title: "Haji Hassan Group Unveils New Brand Identity",
       category: "Company News",
-      date: "2024-02-20",
+      date: "2024-05-15",
       excerpt:
-        "A state-of-the-art ready-mix production facility has been commissioned to meet growing construction demand in Bahrain.",
-      image: "/images/industrial.jpg",
+        "The group has unveiled a refreshed corporate brand identity representing growth, innovation, and national leadership.",
+      image:
+        "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=600&q=80",
     },
     {
-      title: "Group Recognized for Safety Excellence",
+      title: "Green Factory 2025 Award for Haji Hassan Readymix",
       category: "Awards",
-      date: "2024-01-10",
+      date: "2024-04-28",
       excerpt:
-        "Haji Hassan Group has received recognition for maintaining industry-leading safety standards across all operations.",
-      image: "/images/careers-bg.jpg",
+        "Recognized for sustainable concrete production and eco-friendly manufacturing initiatives.",
+      image:
+        "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=600&q=80",
+    },
+    {
+      title: "Motorworks Services Appointed Exclusive Bosch Service Partner",
+      category: "Partnerships",
+      date: "2024-04-10",
+      excerpt:
+        "A major strategic alliance strengthening technical capabilities and industrial service standards in Bahrain.",
+      image:
+        "https://images.unsplash.com/photo-1617814076367-b759c7d7e738?auto=format&fit=crop&w=600&q=80",
     },
   ],
   awards: [
@@ -327,9 +375,8 @@ export const siteData: SiteData = {
     { label: "About Us", href: "#about" },
     { label: "Companies", href: "#companies" },
     { label: "Projects", href: "#projects" },
-    { label: "Investors", href: "#investors" },
-    { label: "Careers", href: "#careers" },
-    { label: "Media Center", href: "#media" },
+    { label: "Why Us", href: "#why-us" },
+    { label: "News & Media", href: "#media" },
     { label: "Contact", href: "#contact" },
   ],
   footer: {
