@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from 'next/server'
 import { db } from '@/lib/db'
 import { z } from 'zod'
 
+export const dynamic = 'force-static'
+
 const contactSchema = z.object({
   name: z.string().min(1),
   company: z.string().optional(),

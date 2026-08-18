@@ -1,7 +1,7 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  output: "standalone",
+  output: "export",
   basePath: "/hajihassan",
   /* config options here */
   typescript: {
@@ -10,6 +10,7 @@ const nextConfig: NextConfig = {
   reactStrictMode: false,
   devIndicators: false,
   images: {
+    unoptimized: true,
     remotePatterns: [
       {
         protocol: "https",
